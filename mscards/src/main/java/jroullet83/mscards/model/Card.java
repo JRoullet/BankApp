@@ -1,7 +1,6 @@
 package jroullet83.mscards.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,7 +8,6 @@ import lombok.ToString;
 import java.util.Date;
 
 @Entity
-//@Data
 @Getter
 @Setter
 @ToString
