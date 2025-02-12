@@ -15,6 +15,6 @@ CREATE TABLE `accounts`
     customer_id INT,
     account_number INT AUTO_INCREMENT PRIMARY KEY,
     account_type VARCHAR(100) NOT NULL,
-    branch_address VARCHAR(200) NOT NULL,
+    bank_address VARCHAR(200) NOT NULL,
     create_dt DATE DEFAULT NULL
 );

@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @Table(name = "accounts")
-public class Accounts {
+public class Account {
     @Column(name = "customer_id")
     private int customerId;
     @Column(name = "account_number")
@@ -23,8 +23,8 @@ public class Accounts {
     private long accountNumber;
     @Column(name = "account_type")
     private String accountType;
-    @Column(name = "branch_address")
-    private String branchAddress;
+    @Column(name = "bank_address")
+    private String bankAddress;
     @Column(name = "create_dt")
     private LocalDate createDt;
 
