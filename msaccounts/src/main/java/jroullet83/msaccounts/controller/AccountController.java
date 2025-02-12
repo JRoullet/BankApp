@@ -20,8 +20,6 @@ public class AccountController {
 
     private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 
-
-
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
@@ -35,9 +33,10 @@ public class AccountController {
             Account account = accountService.getAccount(customerId);
 
             if (account != null) {
-//                logger.info("Account found with id " + account.getAccountNumber());
+                logger.info("Account found with id " + account.getAccountNumber()); // If getAccountNumber (@Getter) doesn't work -> Check Lombok
                 return new ResponseEntity<>(account, HttpStatus.OK);
             }
+                logger.info("Account not found with customerId " + customerId);
 //                System.out.println("No account found for customerId : " + customerId);
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
