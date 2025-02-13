@@ -27,6 +27,15 @@
         </processorPath>
         <module name="mscards" />
       </profile>
+      <profile name="Annotation profile for msloans" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath>
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="msloans" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="untitled" target="17" />
@@ -36,6 +45,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="msaccounts" options="-parameters" />
       <module name="mscards" options="-parameters" />
+      <module name="msloans" options="-parameters" />
     </option>
   </component>
 </project>
