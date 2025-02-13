@@ -7,10 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +27,7 @@ public class CardController {
 
     @PostMapping("/{customerId}")
     public ResponseEntity<List<Card>> getCards(@PathVariable Integer customerId) {
+//        ||customerId != customerController.getCustomers() // To complete the if statement
         if(customerId == null) {
             logger.info("customerId doesn't exist");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -42,4 +41,32 @@ public class CardController {
         logger.info(cards.size() + " card(s) found for customer id " + customerId);
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
+
+
+    @PostMapping("/add")
+    public ResponseEntity<Card> addCard(@RequestBody Card card, Errors errors) {
+        if(card == null) {
+            logger.info("card insert is absent");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<Card> cards = cardService.getCards(card.getCustomerId());
+
+        boolean cardExists = cards.stream().anyMatch(existingCard -> existingCard.getCardId() == card.getCardId());
+
+        if(!cardExists)
+        {
+            logger.debug(errors.toString());
+            cardService.addCard(card);
+            logger.info("card " + card.getCardId() +  " created");
+            return new ResponseEntity<>(card, HttpStatus.CREATED);
+        }
+
+        logger.info("card already exists");
+//            cardService.updateCard(card);
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+    }
+
+//    @PutMapping
 }

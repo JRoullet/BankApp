@@ -8,11 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/my-account")
 public class AccountController {
 
     @Autowired
@@ -24,7 +23,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("/my-account/{customerId}")
+    @PostMapping("/{customerId}")
     public ResponseEntity<Account> getMyAccount(@PathVariable Integer customerId) throws JsonProcessingException {
         if(customerId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -37,9 +36,18 @@ public class AccountController {
                 return new ResponseEntity<>(account, HttpStatus.OK);
             }
                 logger.info("Account not found with customerId " + customerId);
-//                System.out.println("No account found for customerId : " + customerId);
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+//    @PostMapping("/add")
+//    public ResponseEntity<Account> addAccount(@RequestBody Account account) {
+//        if(account==null) {
+//            logger.info("Account is null");
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//        accountService.addAccount(account);
+//        return new ResponseEntity<>(account, HttpStatus.OK);
+//    }
 
 }

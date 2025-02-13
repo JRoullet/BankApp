@@ -1,14 +1,14 @@
 package jroullet83.mscards.service;
 
+import jakarta.transaction.Transactional;
 import jroullet83.mscards.model.Card;
 import jroullet83.mscards.repository.CardRepository;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class CardService {
 
     private final CardRepository cardRepository;
@@ -19,5 +19,10 @@ public class CardService {
 
     public List<Card> getCards(int customerId) {
         return cardRepository.getCardsByCustomerId(customerId);
+    }
+
+    public void addCard(Card card) {
+        card.setCardId(card.getCardId());
+        cardRepository.save(card);
     }
 }

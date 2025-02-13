@@ -11,10 +11,11 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+
 public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_id")
     private int cardId;
 

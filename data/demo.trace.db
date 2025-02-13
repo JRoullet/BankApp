@@ -1332,3 +1332,23 @@ INSERT INTO `cards` ( customer_id, card_number, card_type, total_limit, amount_u
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Erreur de syntaxe dans l'instruction SQL "INSERT INTO `cards` ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt )[*], ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt ), ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt ) VALUES ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() ), ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() ), ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() ) "; attendu "OVERRIDING USER VALUE, OVERRIDING SYSTEM VALUE, DIRECT, DEFAULT VALUES, VALUES, SET, WITH, (, SELECT, TABLE, VALUES"
 Syntax error in SQL statement "INSERT INTO `cards` ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt )[*], ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt ), ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt ) VALUES ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() ), ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() ), ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() ) "; expected "OVERRIDING USER VALUE, OVERRIDING SYSTEM VALUE, DIRECT, DEFAULT VALUES, VALUES, SET, WITH, (, SELECT, TABLE, VALUES"; SQL statement:
 INSERT INTO `cards` ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt ), ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt ), ( customer_id, card_number, card_type, total_limit, amount_used, available_amount, create_dt ) VALUES ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() ), ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() ), ( '1','4040 4040 4040 4040', 'credit','10000', '150000', '500',CURRENT_DATE() )  [42001-232]
+2025-02-13 08:58:20.838418+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Erreur de syntaxe dans l'instruction SQL "[*]INFORMATION_SCHEMA.INDEX_COLUMNS"; attendu "INSERT"
+Syntax error in SQL statement "[*]INFORMATION_SCHEMA.INDEX_COLUMNS"; expected "INSERT"; SQL statement:
+INFORMATION_SCHEMA.INDEX_COLUMNS [42001-232]
+2025-02-13 08:58:23.951960+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Erreur de syntaxe dans l'instruction SQL "[*]INFORMATION_SCHEMA.INDEX_COLUMNS"; attendu "INSERT"
+Syntax error in SQL statement "[*]INFORMATION_SCHEMA.INDEX_COLUMNS"; expected "INSERT"; SQL statement:
+INFORMATION_SCHEMA.INDEX_COLUMNS [42001-232]
+2025-02-13 09:24:14.827999+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARDS" non trouvée
+Table "CARDS" not found; SQL statement:
+SELECT * FROM CARDS WHERE CUSTOMER_ID = ? [42102-232]
+2025-02-13 09:24:31.835370+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARDS" non trouvée
+Table "CARDS" not found; SQL statement:
+SELECT * FROM CARDS WHERE CUSTOMER_ID = ? [42102-232]
+2025-02-13 09:27:49.650582+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CARDS" non trouvée
+Table "CARDS" not found; SQL statement:
+SELECT * FROM CARDS WHERE CUSTOMER_ID = ? [42102-232]

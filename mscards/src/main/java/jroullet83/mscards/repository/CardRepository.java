@@ -11,7 +11,9 @@ import java.util.List;
 @Repository
 public interface CardRepository extends JpaRepository <Card,Integer> {
 
-    @Query(value = "SELECT * FROM CARDS WHERE CUSTOMER_ID = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM CARD WHERE CUSTOMER_ID = ?", nativeQuery = true)
     List<Card> getCardsByCustomerId(@Param ("customerId") int customerId);
+
+
 
 }
