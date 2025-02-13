@@ -3,6 +3,7 @@ package jroullet83.msaccounts.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jroullet83.msaccounts.model.Account;
 import jroullet83.msaccounts.service.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/my-account")
+@RequiredArgsConstructor
 public class AccountController {
 
     @Autowired
     private final AccountService accountService;
 
     private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
-
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
 
     @PostMapping("/{customerId}")
     public ResponseEntity<Account> getMyAccount(@PathVariable Integer customerId) throws JsonProcessingException {
@@ -42,15 +40,21 @@ public class AccountController {
 
     @PostMapping("/add")
     public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-        if(account==null) {
-            logger.info("Account is null");
+        if(account.getCreateDt() == null) {
+            logger.info("Empty account data");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if(account.getCustomerId() == accountService.getAccount(account.getCustomerId()).getCustomerId()) {
+        Account existingAccount = accountService.getAccount(account.getCustomerId());
+        if(existingAccount != null) {
+            logger.info("Account already exists for customerId " + account.getCustomerId());
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        accountService.addAccount(account);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        else {
+            accountService.addAccount(account);
+            logger.info("Account created : " + account.getAccountNumber());
+            return new ResponseEntity<>(account, HttpStatus.CREATED);
+        }
+
     }
 
 }
