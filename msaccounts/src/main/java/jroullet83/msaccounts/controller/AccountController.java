@@ -40,14 +40,17 @@ public class AccountController {
         }
     }
 
-//    @PostMapping("/add")
-//    public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-//        if(account==null) {
-//            logger.info("Account is null");
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        accountService.addAccount(account);
-//        return new ResponseEntity<>(account, HttpStatus.OK);
-//    }
+    @PostMapping("/add")
+    public ResponseEntity<Account> addAccount(@RequestBody Account account) {
+        if(account==null) {
+            logger.info("Account is null");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(account.getCustomerId() == accountService.getAccount(account.getCustomerId()).getCustomerId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        accountService.addAccount(account);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 
 }

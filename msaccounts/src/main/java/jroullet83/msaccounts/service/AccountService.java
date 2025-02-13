@@ -19,6 +19,6 @@ public class AccountService {
         return accountRepository.getAccountByCustomerId(customerId);
     }
 
-//    public void addAccount(Account account) {accountRepository.save(account);}
+    public void addAccount(Account account) {accountRepository.save(account);}
 
 }
