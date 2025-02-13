@@ -11,7 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-
+@Table(name = "card")
 public class Card {
 
     @Id

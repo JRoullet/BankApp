@@ -14,7 +14,7 @@ import static jroullet83.msaccounts.util.AccountNumberGenerator.generateAccountN
 @Getter
 @Setter
 @ToString
-@Table(name = "accounts")
+@Table(name = "account")
 public class Account {
     @Column(name = "customer_id")
     private int customerId;

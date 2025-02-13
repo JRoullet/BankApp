@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends JpaRepository <Account, Integer> {
 
-    @Query(value= "SELECT * FROM ACCOUNTS WHERE CUSTOMER_ID =?", nativeQuery = true)
+    @Query(value= "SELECT * FROM ACCOUNT WHERE CUSTOMER_ID =?", nativeQuery = true)
     Account getAccountByCustomerId(@Param("customerId") Integer customerId);
 
 }
