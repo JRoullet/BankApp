@@ -1,6 +1,7 @@
 package jroullet83.msloans.Repository;
 
 import jroullet83.msloans.model.Loan;
+import jroullet83.msloans.model.dto.CustomerDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,4 +14,5 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
 
     @Query(value = "SELECT * FROM LOAN WHERE customer_id =?", nativeQuery = true)
     List<Loan> getLoansByCustomerId(@Param ("customerId") int customerId);
+
 }
