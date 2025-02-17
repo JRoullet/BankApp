@@ -30,6 +30,13 @@
 ##      data-locations: classpath:db/data.sql
 
 # Configuration is delegated to config-server
+#Config n1
+#spring.config.import=optional:configserver:http://localhost:8888
+#spring.cloud.config.name=msaccounts
 
-spring.config.import=optional:configserver:http://localhost:8888
-spring.cloud.config.name=msaccounts
+spring:
+  application:
+    name: ms-accounts-dev
+  config:
+    import:
+      configserver:http://localhost:8888/
