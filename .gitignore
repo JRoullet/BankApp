@@ -1,0 +1,3 @@
+# Ignorer tous les fichiers et répertoires .idea
+.idea/
+data/
