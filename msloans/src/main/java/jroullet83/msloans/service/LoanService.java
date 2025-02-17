@@ -45,4 +45,5 @@ public class LoanService {
         loanRepository.save(loan);
         logger.info("New loan saved in repository");
     }
+
 }

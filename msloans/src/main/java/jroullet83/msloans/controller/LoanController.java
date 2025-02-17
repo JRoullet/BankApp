@@ -41,4 +41,7 @@ public class LoanController {
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 
+//    @DeleteMapping()
+//    public ResponseEntity<Loan> deleteLoan(@RequestBody Loan loan) {}
+
 }
