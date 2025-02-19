@@ -6,12 +6,16 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+// Choose between this config class or the fields in application.yml
 @Configuration
 public class GitConfig {
 
     @Bean
     public CredentialsProvider credentialsProvider() {
-        return new UsernamePasswordCredentialsProvider("YOUR USERNAME", "YOUR PASSWORD");
+        String username = System.getenv("GIT_USERNAME");
+        String password = System.getenv("GIT_PASSWORD"); // Password is initialized and needs to be passed as a variable in a String (for example)
+        return new UsernamePasswordCredentialsProvider(username, password);
     }
 
     @Bean

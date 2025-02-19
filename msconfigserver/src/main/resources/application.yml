@@ -12,7 +12,7 @@
 #server:
 #  port: 8888
 
-#Config Git
+#Config Git -- Environment Variables are set in IntelliJ or Bash (export $GIT_USERNAME= XXXX // Same for Password)
 server:
   port: 8888
 spring:
@@ -22,10 +22,19 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/JRoullet/Bankapplication_config.git
+          uri: https://github.com/${GIT_USERNAME}/Bankapplication_config.git
           username: ${GIT_USERNAME}
           password: ${GIT_PASSWORD}
           clone-on-start: true
           default-label: master
-#  profiles:
-#    active: native
+  profiles:
+    active: git,native
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          config:
+            server:
+              environment: TRACE
