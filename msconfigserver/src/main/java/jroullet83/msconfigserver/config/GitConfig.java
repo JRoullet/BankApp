@@ -22,4 +22,5 @@ public class GitConfig {
     public TransportConfigCallback transportConfigCallback(CredentialsProvider credentialsProvider) {
         return transport -> transport.setCredentialsProvider(credentialsProvider);
     }
+
 }

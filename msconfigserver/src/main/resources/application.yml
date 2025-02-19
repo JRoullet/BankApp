@@ -23,8 +23,8 @@ spring:
       server:
         git:
           uri: https://github.com/${GIT_USERNAME}/Bankapplication_config.git
-          username: ${GIT_USERNAME}
-          password: ${GIT_PASSWORD}
+#          username: ${GIT_USERNAME}
+#          password: ${GIT_PASSWORD}
           clone-on-start: true
           default-label: master
   profiles:
