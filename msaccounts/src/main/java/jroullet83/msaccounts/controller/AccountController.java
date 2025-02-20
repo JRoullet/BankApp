@@ -1,7 +1,9 @@
 package jroullet83.msaccounts.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jroullet83.msaccounts.config.AccountConfiguration;
 import jroullet83.msaccounts.model.Account;
+import jroullet83.msaccounts.model.Properties;
 import jroullet83.msaccounts.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -18,6 +20,8 @@ public class AccountController {
 
     @Autowired
     private final AccountService accountService;
+
+    private final AccountConfiguration accountConfiguration;
 
     private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 
@@ -55,6 +59,18 @@ public class AccountController {
             return new ResponseEntity<>(account, HttpStatus.CREATED);
         }
 
+    }
+
+    //Properties EndPoint
+    @GetMapping("/details/properties")
+    public ResponseEntity<Properties> getPropertiesDetails() {
+        Properties properties = new Properties(
+                accountConfiguration.getMsg(),
+                accountConfiguration.getBuildVersion(),
+                accountConfiguration.getMailDetails(),
+                accountConfiguration.getActiveBranches()
+        );
+        return new ResponseEntity<>(properties, HttpStatus.OK);
     }
 
 }

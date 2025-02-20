@@ -8,11 +8,11 @@
 		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>jroullet83</groupId>
-	<artifactId>msconfigserver</artifactId>
+	<groupId>jroullet</groupId>
+	<artifactId>msdiscovery</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>msconfigserver</name>
-	<description>ms configserver for bank application</description>
+	<name>msdiscovery</name>
+	<description>Discovery Service for Bank Application</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -33,7 +33,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 
 		<dependency>
@@ -42,7 +46,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

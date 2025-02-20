@@ -34,9 +34,10 @@
 #spring.config.import=optional:configserver:http://localhost:8888
 #spring.cloud.config.name=msaccounts
 
+# Choose configuration file from BankApplication_Config
 spring:
   application:
-    name: ms-accounts-dev
+    name: ms-accounts
   config:
     import:
       configserver:http://localhost:8888/

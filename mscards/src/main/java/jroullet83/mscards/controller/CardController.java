@@ -1,10 +1,12 @@
 package jroullet83.mscards.controller;
 
+import jroullet83.mscards.config.CardConfig;
 import jroullet83.mscards.model.Card;
+import jroullet83.mscards.model.Properties;
 import jroullet83.mscards.service.CardService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -14,16 +16,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/my-cards")
+@RequiredArgsConstructor
 public class CardController {
 
     Logger logger = LoggerFactory.getLogger(CardController.class);
 
-    @Autowired
     private final CardService cardService;
-
-    public CardController(CardService cardService) {
-        this.cardService = cardService;
-    }
+    private final CardConfig cardConfig;
 
     @PostMapping("/{customerId}")
     public ResponseEntity<List<Card>> getCards(@PathVariable Integer customerId) {
@@ -66,6 +65,17 @@ public class CardController {
 //            cardService.updateCard(card);
         return new ResponseEntity<>(HttpStatus.CONFLICT);
 
+    }
+
+    @GetMapping("/details/properties")
+    public ResponseEntity<Properties> getPropertiesDetails() {
+        Properties properties = new Properties(
+                cardConfig.getMsg(),
+                cardConfig.getBuildVersion(),
+                cardConfig.getMailDetails(),
+                cardConfig.getActiveBranches()
+        );
+        return new ResponseEntity<>(properties, HttpStatus.OK);
     }
 
 //    @PutMapping

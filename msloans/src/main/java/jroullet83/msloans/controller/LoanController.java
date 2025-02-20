@@ -1,6 +1,8 @@
 package jroullet83.msloans.controller;
 
+import jroullet83.msloans.config.LoanConfig;
 import jroullet83.msloans.model.Loan;
+import jroullet83.msloans.model.Properties;
 import jroullet83.msloans.model.dto.CustomerDto;
 import jroullet83.msloans.service.LoanService;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 public class LoanController {
 
     private final LoanService loanService;
+    private final LoanConfig loanConfig;
 
 
     private final static Logger logger = LoggerFactory.getLogger(LoanController.class);
@@ -39,6 +42,18 @@ public class LoanController {
         loanService.addLoan(loan);
         logger.info("New loan added");
         return new ResponseEntity<>(loan, HttpStatus.OK);
+    }
+
+    //Properties EndPoint
+    @GetMapping("/details/properties")
+    public ResponseEntity<Properties> getPropertiesDetails() {
+        Properties properties = new Properties(
+                loanConfig.getMsg(),
+                loanConfig.getBuildVersion(),
+                loanConfig.getMailDetails(),
+                loanConfig.getActiveBranches()
+        );
+        return new ResponseEntity<>(properties, HttpStatus.OK);
     }
 
 //    @DeleteMapping()
