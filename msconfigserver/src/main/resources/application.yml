@@ -28,7 +28,8 @@ spring:
           clone-on-start: true
           default-label: master
   profiles:
-    active: git,native
+    active: git
+#    active: git, native
 
 logging:
   level:
@@ -38,3 +39,4 @@ logging:
           config:
             server:
               environment: TRACE
+

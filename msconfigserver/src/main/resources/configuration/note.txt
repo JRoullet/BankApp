@@ -1,0 +1,2 @@
+This directory is for previous configuration (local configuration),
+when the configuration files were not deported on GitHub.
