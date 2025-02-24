@@ -41,3 +41,33 @@ spring:
   config:
     import:
       configserver:http://localhost:8888/
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+    instances:
+      detailsForCustomerSupportApp:
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state:
+          15000
+        permitted-number-of-calls-in-half-open-state: 2
+  retry:
+    instances:
+      retryForCustomerDetails:
+        max-attempts: 1
+        wait-duration:
+          seconds: 2
+  ratelimiter:
+    configs:
+      default:
+        register-health-indicator: true
+    instances:
+      sayHello:
+        timeout-duration:
+          seconds: 5
+        limit-refresh-period:
+          seconds: 5
+        limit-for-period: 1

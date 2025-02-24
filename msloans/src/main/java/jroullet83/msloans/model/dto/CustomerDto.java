@@ -1,15 +1,11 @@
 package jroullet83.msloans.model.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CustomerDto {
-
-    public CustomerDto(int customerId) {
-        this.customerId = customerId;
-    }
-
     private int customerId;
-
-    public int getCustomerId() {
-        return customerId;
-    }
 
 }

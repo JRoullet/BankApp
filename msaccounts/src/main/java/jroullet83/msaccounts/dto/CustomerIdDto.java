@@ -1,6 +1,7 @@
 package jroullet83.msaccounts.dto;
 
 
+import jroullet83.msaccounts.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

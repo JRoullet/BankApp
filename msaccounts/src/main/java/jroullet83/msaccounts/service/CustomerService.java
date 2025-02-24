@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +25,9 @@ public class CustomerService {
     public void addCustomer(Customer customer) {
         logger.info("Adding customer " + customer.getEmail());
         customerRepository.save(customer);
+    }
+
+    public Optional<Customer> getCustomerById(Integer customerId) {
+        return customerRepository.findById(customerId);
     }
 }

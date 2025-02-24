@@ -6,8 +6,6 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-@AllArgsConstructor
 
 public class Card {
 

@@ -31,19 +31,22 @@ public class LoanService {
                 .collect(Collectors.toList());
     }
 
-    //Using PathVariable, no Dto
-    public List<Loan> loanListing(int customerId) {
-        List<Loan> loansByUser = loanRepository.getLoansByCustomerId(customerId);
-        return loansByUser
-                .stream()
-                .sorted((l1, l2) -> l2.getStartDt().compareTo(l1.getStartDt())) // Reversed date sorting : most recent to most ancient
-                .collect(Collectors.toList());
-    }
+//    //Using PathVariable, no Dto
+//    public List<Loan> loanListing(int customerId) {
+//        List<Loan> loansByUser = loanRepository.getLoansByCustomerId(customerId);
+//        return loansByUser
+//                .stream()
+//                .sorted((l1, l2) -> l2.getStartDt().compareTo(l1.getStartDt())) // Reversed date sorting : most recent to most ancient
+//                .collect(Collectors.toList());
+//    }
 
     // Add Loan
     public void addLoan(Loan loan) {
         loanRepository.save(loan);
         logger.info("New loan saved in repository");
     }
+
+//    public void deleteLoanById(Loan loan) {
+//    }
 
 }

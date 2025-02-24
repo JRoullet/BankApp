@@ -11,6 +11,6 @@ import java.util.List;
 @FeignClient(name="ms-cards")
 public interface CardFeignClient {
 
-    @PostMapping(value="my-cards", consumes = "application/json")
+    @PostMapping(value="my-cards/list", consumes = "application/json")
     List<Card> getCardsDetails(@RequestBody CustomerIdDto customerIdDto);
 }

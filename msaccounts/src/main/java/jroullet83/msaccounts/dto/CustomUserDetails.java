@@ -9,11 +9,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class CustomUserDetails {
-
-    private Account account;
+    private Integer customerId;
+    private List<Account> accounts;
     private List<Card> cards;
     private List<Loan> loans;
 

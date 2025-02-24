@@ -31,11 +31,11 @@ public class LoanController {
         return new ResponseEntity<>(loans, HttpStatus.OK);
     }
 
-    @PostMapping("/{customerId}")
-    public ResponseEntity<List<Loan>> getAllLoansByCustomerId(@PathVariable int customerId) {
-        List<Loan> loans = loanService.loanListing(customerId);
-        return new ResponseEntity<>(loans, HttpStatus.OK);
-    }
+//    @PostMapping("/{customerId}")
+//    public ResponseEntity<List<Loan>> getAllLoansByCustomerId(@RequestBody int customerId) {
+//        List<Loan> loans = loanService.loanListing(customerId);
+//        return new ResponseEntity<>(loans, HttpStatus.OK);
+//    }
 
     @PostMapping("/add")
     public ResponseEntity<Loan> addLoan(@RequestBody Loan loan) {

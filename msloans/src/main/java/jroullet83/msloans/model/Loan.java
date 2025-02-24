@@ -19,7 +19,8 @@ public class Loan {
     @Column(name = "loan_number")
     private int loanNumber;
 
-    @Column(name = "customer_id")
+//    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
     private int customerId;
 
     @Column(name="start_dt")
