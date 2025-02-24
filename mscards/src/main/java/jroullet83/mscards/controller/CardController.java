@@ -1,6 +1,7 @@
 package jroullet83.mscards.controller;
 
 import jroullet83.mscards.config.CardConfig;
+import jroullet83.mscards.dto.CustomerIdDto;
 import jroullet83.mscards.model.Card;
 import jroullet83.mscards.model.Properties;
 import jroullet83.mscards.service.CardService;
@@ -24,20 +25,20 @@ public class CardController {
     private final CardService cardService;
     private final CardConfig cardConfig;
 
-    @PostMapping("/{customerId}")
-    public ResponseEntity<List<Card>> getCards(@PathVariable Integer customerId) {
-//        ||customerId != customerController.getCustomers() // To complete the if statement
-        if(customerId == null) {
-            logger.info("customerId doesn't exist");
+    @PostMapping("/list")
+    public ResponseEntity<List<Card>> getCards(@RequestBody CustomerIdDto customerIdDto) {
+//        ||customerIdDto != customerController.getCustomers() // To complete the if statement
+        if(customerIdDto == null) {
+            logger.info("customerIdDto doesn't exist");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        List<Card> cards = cardService.getCards(customerId);
+        List<Card> cards = cardService.getCards(customerIdDto.getCustomerId());
 
         if(cards.isEmpty()) {
-            logger.info("No cards found for customer id " + customerId);
+            logger.info("No cards found for customer id " + customerIdDto);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        logger.info(cards.size() + " card(s) found for customer id " + customerId);
+        logger.info(cards.size() + " card(s) found for customer id " + customerIdDto);
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 
