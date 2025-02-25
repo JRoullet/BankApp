@@ -28,7 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountController {
 
-    @Autowired
+
     private final AccountService accountService;
     private final AccountConfiguration accountConfiguration;
 
@@ -102,17 +102,40 @@ public class AccountController {
     }
 
 
-    @CircuitBreaker(name="detailsForCustomerSupportApp") //
+    @CircuitBreaker(name="detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallBack") // Postman URL
+//    @Retry(name="retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
     @PostMapping("/my-details")
     public ResponseEntity<CustomUserDetails> getMyAccountDetails(@RequestBody CustomerIdDto customerIdDto) {
 
-        List<Account> accounts = accountService.getAccounts(customerIdDto.getCustomerId());
-        List<Card> cards = cardFeignClient.getCardsDetails(customerIdDto);
-        List<Loan> loans = loanFeignClient.getLoansDetails(customerIdDto);
+        if (true) {
+            throw new RuntimeException("Simulated error");
+        }
 
-        CustomUserDetails customUserDetails = AccountMapper.mapToCustomUserDetailsDto(accounts,customerIdDto, cards,loans);
+        List<Account> accounts = accountService.getAccounts(customerIdDto.getCustomerId());
+        List<Loan> loans = loanFeignClient.getLoansDetails(customerIdDto);
+        List<Card> cards = cardFeignClient.getCardsDetails(customerIdDto);
+
+
+        CustomUserDetails customUserDetails = AccountMapper.mapToCustomUserDetailsDto(accounts,customerIdDto,loans,cards);
 
         return new ResponseEntity<>(customUserDetails, HttpStatus.OK);
     }
+
+    private ResponseEntity<?> myCustomerDetailsFallBack(CustomerIdDto customerIdDto, Throwable t) {
+
+        System.err.println("Fallback triggered due to exception: " + t.getMessage());
+
+        List<Account> accounts = accountService.getAccounts(customerIdDto.getCustomerId());
+//        List<Loan> loans = loanFeignClient.getLoansDetails(customerIdDto);
+        List<Card> cards = cardFeignClient.getCardsDetails(customerIdDto);
+
+
+        CustomUserDetails customUserDetails = new CustomUserDetails();
+        customUserDetails.setCustomerId(customerIdDto.getCustomerId());
+        customUserDetails.setAccounts(accounts);
+        customUserDetails.setCards(cards);
+        return new ResponseEntity<>(customUserDetails, HttpStatus.OK);
+    }
+
 
 }

@@ -9,7 +9,7 @@ import jroullet83.msaccounts.model.Loan;
 import java.util.List;
 
 public class AccountMapper {
-    public static CustomUserDetails mapToCustomUserDetailsDto(List<Account> accounts, CustomerIdDto customerIdDto, List<Card> cards, List<Loan> loans) {
+    public static CustomUserDetails mapToCustomUserDetailsDto(List<Account> accounts, CustomerIdDto customerIdDto, List<Loan> loans, List<Card> cards) {
         CustomUserDetails customUserDetails = new CustomUserDetails();
         customUserDetails.setCustomerId(customerIdDto.getCustomerId());
         customUserDetails.setAccounts(accounts);
