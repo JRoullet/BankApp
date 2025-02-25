@@ -39,4 +39,3 @@ logging:
           config:
             server:
               environment: TRACE
-

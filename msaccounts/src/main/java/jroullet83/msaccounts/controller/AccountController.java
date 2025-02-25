@@ -107,9 +107,10 @@ public class AccountController {
     @PostMapping("/my-details")
     public ResponseEntity<CustomUserDetails> getMyAccountDetails(@RequestBody CustomerIdDto customerIdDto) {
 
-        if (true) {
-            throw new RuntimeException("Simulated error");
-        }
+//        //Test if exception is handled
+//        if (true) {
+//            throw new RuntimeException("Simulated error");
+//        }
 
         List<Account> accounts = accountService.getAccounts(customerIdDto.getCustomerId());
         List<Loan> loans = loanFeignClient.getLoansDetails(customerIdDto);
@@ -121,19 +122,16 @@ public class AccountController {
         return new ResponseEntity<>(customUserDetails, HttpStatus.OK);
     }
 
+    // Let's assume cards is unstable, we provide an alternative to the request with fallbackMethod
     private ResponseEntity<?> myCustomerDetailsFallBack(CustomerIdDto customerIdDto, Throwable t) {
 
-        System.err.println("Fallback triggered due to exception: " + t.getMessage());
-
+//        //Print exception
+//        System.err.println("Fallback triggered due to exception: " + t.getMessage());
         List<Account> accounts = accountService.getAccounts(customerIdDto.getCustomerId());
-//        List<Loan> loans = loanFeignClient.getLoansDetails(customerIdDto);
-        List<Card> cards = cardFeignClient.getCardsDetails(customerIdDto);
+        List<Loan> loans = loanFeignClient.getLoansDetails(customerIdDto);
 
+        CustomUserDetails customUserDetails = AccountMapper.mapToCustomUserDetailsDto(accounts,customerIdDto,loans,null);
 
-        CustomUserDetails customUserDetails = new CustomUserDetails();
-        customUserDetails.setCustomerId(customerIdDto.getCustomerId());
-        customUserDetails.setAccounts(accounts);
-        customUserDetails.setCards(cards);
         return new ResponseEntity<>(customUserDetails, HttpStatus.OK);
     }
 
