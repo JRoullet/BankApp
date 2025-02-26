@@ -2,6 +2,8 @@ package jroullet83.msaccounts.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.RetryRegistry;
+import io.github.resilience4j.retry.annotation.Retry;
 import jroullet83.msaccounts.clients.CardFeignClient;
 import jroullet83.msaccounts.clients.LoanFeignClient;
 import jroullet83.msaccounts.config.AccountConfiguration;
@@ -41,6 +43,25 @@ public class AccountController {
 
     @Autowired
     private CustomerService customerService;
+
+
+//    public void RetryTestService(RetryRegistry retryRegistry) {
+//        // all
+//        retryRegistry.getAllRetries()
+//                .forEach(retry -> retry
+//                        .getEventPublisher()
+//                        .onRetry(event -> logger.info("{}", event))
+//                );
+//
+//        // or single
+//        retryRegistry
+//                .retry("retry-for-customer-details")
+//                .getEventPublisher()
+//                .onRetry(event -> logger.info("{}", event));
+//    }
+
+
+
 
     @PostMapping("/accounts")
     public ResponseEntity<List<?>> getAccounts(@RequestBody CustomerIdDto customerIdDto) throws JsonProcessingException {
@@ -102,24 +123,36 @@ public class AccountController {
     }
 
 
-    @CircuitBreaker(name="detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallBack") // Postman URL
-//    @Retry(name="retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
+    @CircuitBreaker(name="for-customer-details", fallbackMethod = "myCustomerDetailsFallBack") // Postman URL, defined in app.yml
+    @Retry(name = "for-customer-details", fallbackMethod = "myCustomerDetailsFallBack")
     @PostMapping("/my-details")
-    public ResponseEntity<CustomUserDetails> getMyAccountDetails(@RequestBody CustomerIdDto customerIdDto) {
+    public ResponseEntity<?> getMyAccountDetails(@RequestBody CustomerIdDto customerIdDto) {
 
+//        logger.info("Simulated error for Retry");
+//        throw new RuntimeException("Simulated error for Retry");
+//        RetryTestService(RetryRegistry.custom().build());
+
+        List<Account> accounts = accountService.getAccounts(customerIdDto.getCustomerId());
+        boolean accountFound = accounts.stream()
+                .anyMatch(account -> account.getCustomer().getCustomerId().equals(customerIdDto.getCustomerId()));
+
+        if(accountFound) {
+            List<Loan> loans = loanFeignClient.getLoansDetails(customerIdDto);
+            List<Card> cards = cardFeignClient.getCardsDetails(customerIdDto);
+
+
+            CustomUserDetails customUserDetails = AccountMapper.mapToCustomUserDetailsDto(accounts,customerIdDto,loans,cards);
+            logger.info("Customer details found with id {}", customerIdDto.getCustomerId());
+            return new ResponseEntity<>(customUserDetails, HttpStatus.OK);
+
+        }
 //        //Test if exception is handled
 //        if (true) {
 //            throw new RuntimeException("Simulated error");
 //        }
+        logger.error("Account not found with customerId {}", customerIdDto.getCustomerId());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CustomerId doesn't exist");
 
-        List<Account> accounts = accountService.getAccounts(customerIdDto.getCustomerId());
-        List<Loan> loans = loanFeignClient.getLoansDetails(customerIdDto);
-        List<Card> cards = cardFeignClient.getCardsDetails(customerIdDto);
-
-
-        CustomUserDetails customUserDetails = AccountMapper.mapToCustomUserDetailsDto(accounts,customerIdDto,loans,cards);
-
-        return new ResponseEntity<>(customUserDetails, HttpStatus.OK);
     }
 
     // Let's assume cards is unstable, we provide an alternative to the request with fallbackMethod

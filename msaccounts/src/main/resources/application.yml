@@ -40,21 +40,30 @@ spring:
     name: ms-accounts
   config:
     import:
-      configserver:http://localhost:8888/
+      optional:configserver:http://localhost:8888/
 
-logging:
-  level:
-    io.github.resilience4j.circuitbreaker: DEBUG
 
 resilience4j:
+  retry:
+    configs:
+      default:
+        max-attempts: 4
+        wait-duration: 10000
+    instances:
+      for-customer-details:
+        max-attempts: 4
+        wait-duration: 2000
+        retry-exceptions:
+          - feign.FeignException
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
   circuitbreaker:
     configs:
       default:
         register-health-indicator: true
     instances:
-      detailsForCustomerSupportApp:
-        base-config: default
-        minimum-number-of-calls: 5
+      for-customer-details:
+        minimum-number-of-calls: 3
         failure-rate-threshold: 50
         wait-duration-in-open-state: 30000
         permitted-number-of-calls-in-half-open-state: 2
@@ -62,13 +71,13 @@ resilience4j:
           - feign.FeignException
           - org.springframework.web.client.HttpServerErrorException
           - java.io.IOException
-#  retry:
-#    instances:
-#      retryForCustomerDetails:
-#        max-attempts: 3
-#        wait-duration:
-#          seconds: 2
-
+logging:
+  level:
+    io.github.resilience4j.retry: DEBUG
+    io.github.resilience4j.core: DEBUG
+    io.github.resilience4j.circuitbreaker: DEBUG
+    org.springframework.cloud.config.client: DEBUG
+    org.springframework.cloud.context.properties: DEBUG
 #  ratelimiter:
 #    configs:
 #      default:
