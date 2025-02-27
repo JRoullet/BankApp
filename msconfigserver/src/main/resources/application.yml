@@ -12,6 +12,7 @@
 #server:
 #  port: 8888
 
+
 #Config Git -- Environment Variables are set in IntelliJ or Bash (export $GIT_USERNAME= XXXX // Same for Password)
 server:
   port: 8888
@@ -30,7 +31,6 @@ spring:
   profiles:
     active: git
 #    active: git, native
-
 logging:
   level:
     org:
