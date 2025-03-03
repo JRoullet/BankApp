@@ -45,20 +45,20 @@ public class AccountController {
     private CustomerService customerService;
 
 
-//    public void RetryTestService(RetryRegistry retryRegistry) {
-//        // all
-//        retryRegistry.getAllRetries()
-//                .forEach(retry -> retry
-//                        .getEventPublisher()
-//                        .onRetry(event -> logger.info("{}", event))
-//                );
-//
-//        // or single
-//        retryRegistry
-//                .retry("retry-for-customer-details")
-//                .getEventPublisher()
-//                .onRetry(event -> logger.info("{}", event));
-//    }
+    public void RetryTestService(RetryRegistry retryRegistry) {
+        // all
+        retryRegistry.getAllRetries()
+                .forEach(retry -> retry
+                        .getEventPublisher()
+                        .onRetry(event -> logger.info("{}", event))
+                );
+
+        // or single
+        retryRegistry
+                .retry("retry-for-customer-details")
+                .getEventPublisher()
+                .onRetry(event -> logger.info("{}", event));
+    }
 
 
 
@@ -124,13 +124,13 @@ public class AccountController {
 
 
     @CircuitBreaker(name="for-customer-details", fallbackMethod = "myCustomerDetailsFallBack") // Postman URL, defined in app.yml
-    @Retry(name = "for-customer-details", fallbackMethod = "myCustomerDetailsFallBack")
     @PostMapping("/my-details")
     public ResponseEntity<?> getMyAccountDetails(@RequestBody CustomerIdDto customerIdDto) {
 
+//        RetryTestService(RetryRegistry.custom().build());
 //        logger.info("Simulated error for Retry");
 //        throw new RuntimeException("Simulated error for Retry");
-//        RetryTestService(RetryRegistry.custom().build());
+
 
         List<Account> accounts = accountService.getAccounts(customerIdDto.getCustomerId());
         boolean accountFound = accounts.stream()

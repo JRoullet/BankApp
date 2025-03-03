@@ -42,42 +42,6 @@ spring:
     import:
       optional:configserver:http://localhost:8888/
 
-
-resilience4j:
-  retry:
-    configs:
-      default:
-        max-attempts: 4
-        wait-duration: 10000
-    instances:
-      for-customer-details:
-        max-attempts: 4
-        wait-duration: 2000
-        retry-exceptions:
-          - feign.FeignException
-          - org.springframework.web.client.HttpServerErrorException
-          - java.io.IOException
-  circuitbreaker:
-    configs:
-      default:
-        register-health-indicator: true
-    instances:
-      for-customer-details:
-        minimum-number-of-calls: 3
-        failure-rate-threshold: 50
-        wait-duration-in-open-state: 30000
-        permitted-number-of-calls-in-half-open-state: 2
-        record-exceptions:
-          - feign.FeignException
-          - org.springframework.web.client.HttpServerErrorException
-          - java.io.IOException
-logging:
-  level:
-    io.github.resilience4j.retry: DEBUG
-    io.github.resilience4j.core: DEBUG
-    io.github.resilience4j.circuitbreaker: DEBUG
-    org.springframework.cloud.config.client: DEBUG
-    org.springframework.cloud.context.properties: DEBUG
 #  ratelimiter:
 #    configs:
 #      default:
