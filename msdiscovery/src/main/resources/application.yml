@@ -3,4 +3,4 @@ spring:
     name: ms-discovery
   config:
     import:
-      configserver:http://localhost:8888/
+      configserver:http://msconfigserver:8888/

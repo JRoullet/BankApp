@@ -40,7 +40,7 @@ spring:
     name: ms-accounts
   config:
     import:
-      optional:configserver:http://localhost:8888/
+      optional:configserver:http://msconfigserver:8888/
 
 #  ratelimiter:
 #    configs:

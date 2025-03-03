@@ -34,4 +34,4 @@ spring:
     name: ms-loans
   config:
     import:
-      configserver:http://localhost:8888/
+      configserver:http://msconfigserver:8888/
